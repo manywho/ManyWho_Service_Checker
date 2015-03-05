@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+
+    <script src="vendor/jquery/dist/jquery.js"></script>
+    <script src="vendor/react/react.js"></script>
+    <script src="vendor/react/JSXTransformer.js"></script>
+
+    <script>var manywho = {}</script>
+    <script type="text/jsx" src="js/utils.js"></script>
+    <script type="text/jsx" src="js/components/fetch-actions.jsx"></script>
+    <script type="text/jsx" src="js/components/fetch-types.jsx"></script>
+</head>
+<body>
+<div class="container">
+    <h1>ManyWho Service Checker</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="service-url">Service URL</label>
+            <input class="form-control" id="service-url" placeholder="Service URL" value="https://services.manywho.com/api/gotoassist/1" />
+        </div>
+    </form>
+
+    <div id="fetch-actions"></div>
+    <div id="fetch-types"></div>
+</div>
+
+<script type="text/jsx">
+    React.render(<FetchActions />, document.getElementById('fetch-actions'));
+    React.render(<FetchTypes />, document.getElementById('fetch-types'));
+</script>
+</body>
+</html>
