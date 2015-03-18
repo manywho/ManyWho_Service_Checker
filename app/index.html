@@ -9,11 +9,14 @@
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/react/react.js"></script>
     <script src="vendor/react/JSXTransformer.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
 
     <script>var manywho = {}</script>
     <script type="text/jsx" src="js/utils.jsx"></script>
+    <script type="text/jsx" src="js/components/fetch-configuration-values.jsx"></script>
     <script type="text/jsx" src="js/components/fetch-actions.jsx"></script>
     <script type="text/jsx" src="js/components/fetch-types.jsx"></script>
+    <script type="text/jsx" src="js/components/test-database-load.jsx"></script>
 </head>
 <body>
 <div class="container">
@@ -22,15 +25,17 @@
     <form>
         <div class="form-group">
             <label for="service-url">Service URL</label>
-            <input class="form-control" id="service-url" placeholder="Service URL" value="https://services.manywho.com/api/gotoassist/1" />
+            <input class="form-control" id="service-url" placeholder="Service URL" value="http://localhost:8080/api/gotoassist/1" />
         </div>
     </form>
 
-    <div id="fetch-actions"></div>
-    <div id="fetch-types"></div>
+    <span id="fetch-configuration-values"></span>
+    <span id="fetch-actions"></span>
+    <span id="fetch-types"></span>
 </div>
 
 <script type="text/jsx">
+    React.render(<FetchConfigurationValues />, document.getElementById('fetch-configuration-values'));
     React.render(<FetchActions />, document.getElementById('fetch-actions'));
     React.render(<FetchTypes />, document.getElementById('fetch-types'));
 </script>

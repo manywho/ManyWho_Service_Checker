@@ -4,6 +4,7 @@
     "gulp": "^3.8.11",
     "gulp-server-livereload": "^1.2.1",
     "express": "4.*",
-    "http-proxy": "0.*"
+    "http-proxy": "0.*",
+    "body-parser": "1.*"
   }
 }

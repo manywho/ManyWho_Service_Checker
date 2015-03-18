@@ -34,6 +34,8 @@ var FetchTypes = React.createClass({
                     <h4>{ type.developerName }</h4>
                     <h5>{ type.developerSummary }</h5>
 
+                    <TestDatabaseLoad type={ type } />
+
                     <ul className="properties">
                     { properties}
                     </ul>
