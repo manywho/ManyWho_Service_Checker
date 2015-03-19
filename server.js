@@ -18,6 +18,8 @@ function apiProxy(host, port) {
                 headers: request.headers
             };
 
+            console.log("Sending request to: " + target.href);
+
             var req = http.request(options, function (res) {
                 response.writeHead(res.statusCode, res.headers);
 
@@ -44,3 +46,4 @@ app.use(express.static(process.cwd() + "/app"));
 app.use(apiProxy('localhost', 3000));
 
 app.listen(3000);
+console.log('Proxy listening on http://localhost:3000');

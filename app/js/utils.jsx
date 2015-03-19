@@ -1,7 +1,8 @@
 manywho.utils = {
+
     addPropertyToList: function (list, property) {
         var type = '';
-        if (property.contentType === 'Object' || property.contentType === 'List') {
+        if (property.contentType === 'ContentObject' || property.contentType === 'ContentList') {
             type = <span> of type <em>{ property.typeElementDeveloperName }</em></span>;
         }
 
@@ -11,4 +12,5 @@ manywho.utils = {
             <li><strong>{ property.developerName }</strong>: { property.contentType } { type } { required }</li>
         );
     }
+
 };
