@@ -1,0 +1,45 @@
+.property-table .glyphicon-ok {
+    color: green;
+}
+
+.property-table .glyphicon-remove {
+    color: red;
+}
+
+.service-selector {
+    margin-bottom: 1em;
+}
+
+.configuration-values-table {
+    margin-top: 1em;
+}
+
+.action-tester-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1500;
+}
+
+.action-tester-background {
+    background-color: #ddd;
+    opacity: 0.5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.action-tester {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 1em;
+}

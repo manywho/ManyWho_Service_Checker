@@ -2,25 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>ManyWho Service Checker</title>
 
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
-
-    <style>
-        .modal-dialog {
-            width: 90%;
-            height: 80%;
-        }
-
-        .inputs-list {
-            overflow-y: scroll;
-            padding-right: 12px;
-        }
-
-        .json-editor {
-            margin-top: 12px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css" />
 
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/react/react.js"></script>
@@ -34,21 +19,19 @@
     <script src="vendor/jsoneditor/dist/jsoneditor.min.js"></script>
 
     <script>var manywho = {}</script>
-    <script type="text/jsx" src="js/utils.jsx"></script>
-    <script src="js/service.js"></script>
-    <script type="text/jsx" src="js/components/root.jsx"></script>
-    <script type="text/jsx" src="js/components/serviceList.jsx"></script>
-    <script type="text/jsx" src="js/components/configurationValues.jsx"></script>
+    <script src="js/services.js"></script>
+    <script type="text/jsx" src="js/components/app.jsx"></script>
+    <script type="text/jsx" src="js/components/service-selector.jsx"></script>
+    <script type="text/jsx" src="js/components/service.jsx"></script>
+    <script type="text/jsx" src="js/components/configuration-values.jsx"></script>
     <script type="text/jsx" src="js/components/actions.jsx"></script>
     <script type="text/jsx" src="js/components/types.jsx"></script>
-    <script type="text/jsx" src="js/components/action.jsx"></script>
-
-
+    <script type="text/jsx" src="js/components/action-tester.jsx"></script>
+    <script type="text/jsx" src="js/components/property-table.jsx"></script>
 </head>
 <body>
 
 <div id="services"></div>
-
 
 <script>
      setTimeout(function() {

@@ -1,4 +1,4 @@
-(function(manywho, $, React) {
+manywho.services = (function(manywho, $, React) {
 
     function guid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -10,7 +10,7 @@
 	var services = {};
 	var selectedService = { id: guid() };
 
-	manywho.services = {
+	return {
 
 		new: function() {
 
@@ -72,51 +72,24 @@
 
 		},
 
-		getConfigurationValues: function(service) {
+        update: function(service) {
 
-			var self = this;
+            var self = this;
 
-	        $.post('/fetch?url=' + service.url + '/metadata', {})
-	        	.then(function(response) {
+            return $.post('/fetch?url=' + service.url + '/metadata', {})
+                .then(function(response) {
 
-	        		service.configurationValues = response.configurationValues;
-        			self.render();
+                    service.configurationValues = response.configurationValues;
+                    service.actions = response.actions;
+                    service.types = response.install.typeElements;
 
-		        });
-
-		},
-
-		getActions: function(service) {
-
-			var self = this;
-
-	        $.post('/fetch?url=' + service.url + '/metadata', {})
-	        	.then(function(response) {
-
-	        		service.actions = response.actions;
-        			self.render();
-
-		        });
-
-		},
-
-		getTypes: function(service) {
-
-			var self = this;
-
-	        $.post('/fetch?url=' + service.url + '/metadata', {})
-	        	.then(function(response) {
-
-	        		service.types = response.install.typeElements;
-        			self.render();
-
-		        });
-
-		},
+                });
+            
+        },
 
 		render: function() {
 
-			 React.render(React.createElement(manywho.root, null), document.getElementById('services'));
+			 React.render(React.createElement(manywho.app, null), document.getElementById('services'));
 
 		}
 

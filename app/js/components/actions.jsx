@@ -1,39 +1,44 @@
 manywho.actions = React.createClass({
 
-    onGet: function (event) {
+    onCloseTester: function(e) {
 
-        manywho.services.getActions(manywho.services.getSelected());        
+        this.setState({
+            testAction: null
+        });
 
     },
 
     onTest: function(e) {
 
-        this.props.onTest(e.target.id);
+        var selectedAction = this.props.service.actions.filter(function(action) {
+
+            return action.uriPart == e.target.id;
+
+        })[0];
+
+        this.setState({
+            testAction: selectedAction
+        });
+
+    },
+
+    getInitialState: function() {
+
+        return { testAction: null }
 
     },
 
     render: function () {
 
-        var actions = manywho.services.getSelected().actions || [];
-        var inputs = [];
-        var outputs = [];
+        var actions = this.props.service.actions || [];
+        var PropertyTable = manywho.propertyTable;
+        var ActionTester = manywho.actionTester;
 
-        actions.forEach(function (action) {
-
-            action.serviceInputs.forEach(function (input) {
-                manywho.utils.addPropertyToList(inputs, input);
-            });
-
-            action.serviceOutputs.forEach(function (output) {
-                manywho.utils.addPropertyToList(outputs, output);
-            });
-
-        });
+        var isActionTesterVisible = this.state.testAction != null;
 
         return (
-            <div className="col-sm-4">
+            <div>
                 <h3>Actions</h3>
-                <button className="btn btn-default btn-block" onClick={ this.onGet }>Update</button>
                 {
                     actions.map(function(action) {
 
@@ -46,19 +51,16 @@ manywho.actions = React.createClass({
                                 <button className="btn btn-small btn-default" onClick={this.onTest} id={action.uriPart}>Test</button>
 
                                 <h5><strong>Inputs</strong></h5>
-                                <ul className="inputs">
-                                { inputs }
-                                </ul>
+                                <PropertyTable properties={action.serviceInputs}></PropertyTable>
 
                                 <h5><strong>Outputs</strong></h5>
-                                <ul className="outputs">
-                                { outputs }
-                                </ul>
+                                    <PropertyTable properties={action.serviceOutputs}></PropertyTable>
                             </div>
                         );
 
                     }, this)
                 }
+                <ActionTester isVisible={isActionTesterVisible} action={this.state.testAction} onClose={this.onCloseTester}></ActionTester>
             </div>
         );
 
