@@ -48,6 +48,7 @@ manywho.service = React.createClass({
         var ConfigurationValues = manywho.configurationValues;
         var Actions = manywho.actions;
         var Types = manywho.types;
+        var Provides = manywho.provides;
 
         return <div>
 
@@ -64,11 +65,12 @@ manywho.service = React.createClass({
 
             <div className="row">
                 <div className="col-sm-7">
-                    <ConfigurationValues service={this.props.service}/>
-                    <Types service={this.props.service}/>
+                    <Provides service={ this.props.service } />
+                    <ConfigurationValues service={ this.props.service }/>
+                    <Types service={ this.props.service }/>
                 </div>
                 <div className="col-sm-5">
-                    <Actions service={this.props.service}/>
+                    <Actions service={ this.props.service }/>
                 </div>
             </div>
 

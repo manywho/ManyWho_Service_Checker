@@ -124,6 +124,13 @@ manywho.services = (function(manywho, $, React) {
             return $.post(service.url + '/metadata', {})
                 .then(function(response) {
 
+                    service.providesDatabase = response.providesDatabase;
+                    service.providesFiles = response.providesFiles;
+                    service.providesIdentity = response.providesIdentity;
+                    service.providesLogic = response.providesLogic;
+                    service.providesSocial = response.providesSocial;
+                    service.providesViews = service.providesViews;
+
                     service.actions = response.actions;
                     if (service.actions) {
 
