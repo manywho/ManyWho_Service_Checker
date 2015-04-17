@@ -35,10 +35,10 @@
 
 .action-tester {
     position: absolute;
-    width: 80%;
+    width: 95%;
     height: 95%;
     top: 2.5%;
-    left: 10%;
+    left: 2.5%;
     background: white;
     border: 1px solid #ddd;
     padding: 1em;

@@ -51,10 +51,10 @@ manywho.actions = React.createClass({
                                 <button className="btn btn-small btn-default" onClick={ this.onTest } id={ action.uriPart }>Test</button>
 
                                 <h5><strong>Inputs</strong></h5>
-                                <PropertyTable properties={ action.serviceInputs }></PropertyTable>
+                                <PropertyTable properties={ action.serviceInputs } isRequiredVisible="true"></PropertyTable>
 
                                 <h5><strong>Outputs</strong></h5>
-                                    <PropertyTable properties={ action.serviceOutputs } isRequiredVisible="true"></PropertyTable>
+                                <PropertyTable properties={ action.serviceOutputs } isRequiredVisible="true"></PropertyTable>
                             </div>
                         );
 

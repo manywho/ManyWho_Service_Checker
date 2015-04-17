@@ -78,7 +78,10 @@ node_modules
 
 
 ### Bower ###
-/app/vendor
+vendor
 .bower-cache
 .bower-registry
 .bower-tmp
+
+cache
+build

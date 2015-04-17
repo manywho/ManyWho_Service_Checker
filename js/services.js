@@ -121,7 +121,7 @@ manywho.services = (function(manywho, $, React) {
 
             var self = this;
 
-            return $.post('/fetch?url=' + service.url + '/metadata', {})
+            return $.post(service.url + '/metadata', {})
                 .then(function(response) {
 
                     service.actions = response.actions;
