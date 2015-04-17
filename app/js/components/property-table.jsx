@@ -7,21 +7,28 @@ manywho.propertyTable = React.createClass({
             var requiredClassName = (prop.required) ? 'glyphicon-ok' : 'glyphicon-remove';
             var contentType = prop.contentType;
             var contentTypeName = null;
+            var required = null;
 
             if (prop.contentType === 'ContentObject' || prop.contentType === 'ContentList') {
 
-                contentTypeName = <a href={ '#' + prop.typeElementDeveloperName.replace(/ /g, '_') }>{prop.typeElementDeveloperName}</a>
+                contentTypeName = <a href={ '#' + prop.typeElementDeveloperName.replace(/ /g, '_') }>{ prop.typeElementDeveloperName }</a>
+
+            }
+
+            if (this.props.isRequiredVisible) {
+
+                required = <td><span className={ 'glyphicon ' + requiredClassName }></span></td>
 
             }
 
             return (<tr>
-                <td>{prop.developerName}</td>
-                <td>{contentType}</td>
-                <td>{contentTypeName}</td>
-                <td><span className={ 'glyphicon ' + requiredClassName }></span></td>
+                <td>{ prop.developerName }</td>
+                <td>{ contentType }</td>
+                <td>{ contentTypeName }</td>
+                { required }
             </tr>);
 
-        })
+        }, this)
 
         return (
             <table className="table table-striped table-condensed property-table">
@@ -30,7 +37,7 @@ manywho.propertyTable = React.createClass({
                         <th>Name</th>
                         <th>Type</th>
                         <th>Type Name</th>
-                        <th>Required</th>
+                        { (this.props.isRequiredVisible) ? <th>Required</th> : null }
                     </tr>
                     {rows}
                 </tbody>

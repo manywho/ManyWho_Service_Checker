@@ -1,6 +1,39 @@
 manywho.configurationValues = React.createClass({
 
-    onSave: function(event) {
+    onSave: function(e) {
+
+        this.props.service.configurationValues = this.props.service.configurationValues.map(function(value) {
+
+            var id = value.developerName.replace(/' '/g, '_');
+
+            if (this.state.values[id]) {
+
+                value.customValue = this.state.values[id];
+
+            }
+
+            return value;
+
+        }, this);
+
+        manywho.services.save(this.props.service);
+
+    },
+
+    onValueChange: function(e) {
+
+        var values = this.state.values;
+        values[e.target.id] = e.target.value;
+
+        this.setState({ values: values });
+
+    },
+
+    getInitialState: function() {
+
+        return {
+            values: {}
+        }
 
     },
 
@@ -17,18 +50,21 @@ manywho.configurationValues = React.createClass({
                     {
                         configurationValues.map(function(value) {
 
-                            return (<tr key={value.developerName}>
+                            var id = value.developerName.replace(/' '/g, '_');
+                            var customValue = value.customValue || this.state.values[id] || '';
+
+                            return (<tr key={ value.developerName }>
                                 <td>{ value.developerName }</td>
                                 <td>
-                                    <input className="form-control" data-developer-name={value.developerName} />
+                                    <input className="form-control" id={ id } value={ customValue } onChange={ this.onValueChange } />
                                 </td>
                             </tr>);
 
-                        })
+                        }, this)
                     }
                     </tbody>
                 </table>
-                <button className="btn btn-primary" onClick={ this.onSave } disabled={isSaveDisabled}>Save</button>
+                <button className="btn btn-primary" onClick={ this.onSave } disabled={ isSaveDisabled }>Save</button>
             </div>
         );
 

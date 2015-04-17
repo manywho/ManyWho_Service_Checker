@@ -16,6 +16,13 @@ manywho.service = React.createClass({
 
     },
 
+    onDelete: function() {
+
+        manywho.services.delete(this.props.service);
+        manywho.services.render();
+
+    },
+
     onUrlChanged: function(e) {
 
         this.setState({
@@ -27,6 +34,12 @@ manywho.service = React.createClass({
     getInitialState: function() {
 
         return { url: this.props.service.url }
+
+    },
+
+    componentWillReceiveProps: function(nextProps) {
+
+        this.setState({ url: nextProps.service.url });
 
     },
 
@@ -43,9 +56,10 @@ manywho.service = React.createClass({
                <input type="text" className="form-control" value={this.state.url} onChange={this.onUrlChanged} />
             </div>
 
-            <div>
-                <button className="btn btn-primary" type="button" onClick={this.onSave}>Save</button>
-                <button className="btn btn-info" type="button" onClick={this.onRefresh}>Refresh</button>
+            <div className="service-buttons">
+                <button className="btn btn-primary" type="button" onClick={ this.onSave }>Save</button>
+                <button className="btn btn-info" type="button" onClick={ this.onRefresh }>Refresh</button>
+                <button className="btn btn-danger" type="button" onClick={ this.onDelete }>Delete</button>
             </div>
 
             <div className="row">

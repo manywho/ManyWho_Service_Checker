@@ -7,14 +7,31 @@ manywho.services = (function(manywho, $, React) {
         });
     }
 
+    function developerNameSort(a, b) {
+
+        if (a.developerName > b.developerName) {
+
+            return 1;
+
+        }
+
+        if (a.developerName < b.developerName) {
+
+            return -1;
+
+        }
+
+        return 0;
+
+    }
+
 	var services = {};
-	var selectedService = { id: guid() };
 
 	return {
 
 		new: function() {
 
-			var newService = { id: guid() }
+			var newService = { id: guid(), url: '', actions: [], types: [], configurationValues: [] }
 			services[newService.id] = newService;
 			this.setSelected(newService);
 
@@ -32,15 +49,27 @@ manywho.services = (function(manywho, $, React) {
 		load: function() {
 
 			services = JSON.parse(localStorage.getItem('services') || '{}');
-
-			var keys = Object.keys(services);
-			if (keys && keys.length > 0) {
-
-				this.setSelected(services[keys[0]]);
-
-			}
+            this.selectDefault();
 
 		},
+
+        delete: function(service) {
+
+            services[service.id] = null;
+            delete services[service.id];
+
+            localStorage.setItem('services', JSON.stringify(services));
+
+            this.selectDefault();
+
+        },
+
+        isSaved: function(id) {
+
+            var services = JSON.parse(localStorage.getItem('services') || '{}');
+            return (services[id]);
+
+        },
 
 		get: function(id) {
 
@@ -59,6 +88,22 @@ manywho.services = (function(manywho, $, React) {
 			selectedService = service;
 
 		},
+
+        selectDefault: function() {
+
+            var keys = Object.keys(services);
+            if (keys.length == 0) {
+
+                this.new();
+
+            }
+            else {
+
+                this.setSelected(services[keys[0]]);
+
+            }
+
+        },
 
 		getAll: function() {
 
@@ -79,12 +124,50 @@ manywho.services = (function(manywho, $, React) {
             return $.post('/fetch?url=' + service.url + '/metadata', {})
                 .then(function(response) {
 
-                    service.configurationValues = response.configurationValues;
                     service.actions = response.actions;
+                    if (service.actions) {
+
+                        service.actions.sort(developerNameSort);
+
+                    }
+
                     service.types = response.install.typeElements;
+                    if (service.types) {
+
+                        service.types.sort(developerNameSort);
+
+                    }
+
+                    if (response.configurationValues) {
+
+                        service.configurationValues = response.configurationValues.map(function(value) {
+
+                            var existingValue = service.configurationValues.filter(function(configValue) {
+
+                                return configValue.developerName == value.developerName;
+
+                            })[0];
+
+                            if (existingValue) {
+
+                                value.customValue = existingValue.customValue;
+
+                            }
+
+                            return value;
+
+                        })
+                        .sort(developerNameSort);
+
+                    }
+                    else {
+
+                        service.configurationValues = [];
+
+                    }
 
                 });
-            
+
         },
 
 		render: function() {

@@ -48,19 +48,19 @@ manywho.actions = React.createClass({
                                 <h5>/{ action.uriPart }</h5>
                                 <h5>{ action.developerSummary }</h5>
 
-                                <button className="btn btn-small btn-default" onClick={this.onTest} id={action.uriPart}>Test</button>
+                                <button className="btn btn-small btn-default" onClick={ this.onTest } id={ action.uriPart }>Test</button>
 
                                 <h5><strong>Inputs</strong></h5>
-                                <PropertyTable properties={action.serviceInputs}></PropertyTable>
+                                <PropertyTable properties={ action.serviceInputs }></PropertyTable>
 
                                 <h5><strong>Outputs</strong></h5>
-                                    <PropertyTable properties={action.serviceOutputs}></PropertyTable>
+                                    <PropertyTable properties={ action.serviceOutputs } isRequiredVisible="true"></PropertyTable>
                             </div>
                         );
 
                     }, this)
                 }
-                <ActionTester isVisible={isActionTesterVisible} action={this.state.testAction} onClose={this.onCloseTester}></ActionTester>
+                <ActionTester isVisible={ isActionTesterVisible } service={ this.props.service } action={ this.state.testAction } onClose={ this.onCloseTester }></ActionTester>
             </div>
         );
 

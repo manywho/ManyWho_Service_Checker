@@ -1,8 +1,8 @@
-.property-table .glyphicon-ok {
+.glyphicon-ok {
     color: green;
 }
 
-.property-table .glyphicon-remove {
+.glyphicon-remove {
     color: red;
 }
 
@@ -36,10 +36,18 @@
 .action-tester {
     position: absolute;
     width: 80%;
-    height: 80%;
-    top: 10%;
+    height: 95%;
+    top: 2.5%;
     left: 10%;
     background: white;
     border: 1px solid #ddd;
     padding: 1em;
+}
+
+.service-buttons .btn {
+    margin-right: 0.5em;
+}
+
+.input-details {
+    margin-bottom: 0.5em;
 }
