@@ -53,23 +53,23 @@ manywho.services = (function(manywho, $, React) {
 
 		},
 
-        delete: function(service) {
+    delete: function(service) {
 
-            services[service.id] = null;
-            delete services[service.id];
+        services[service.id] = null;
+        delete services[service.id];
 
-            localStorage.setItem('services', JSON.stringify(services));
+        localStorage.setItem('services', JSON.stringify(services));
 
-            this.selectDefault();
+        this.selectDefault();
 
-        },
+    },
 
-        isSaved: function(id) {
+    isSaved: function(id) {
 
-            var services = JSON.parse(localStorage.getItem('services') || '{}');
-            return (services[id]);
+        var services = JSON.parse(localStorage.getItem('services') || '{}');
+        return (services[id]);
 
-        },
+    },
 
 		get: function(id) {
 

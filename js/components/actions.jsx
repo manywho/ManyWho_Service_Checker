@@ -43,18 +43,28 @@ manywho.actions = React.createClass({
                     actions.map(function(action) {
 
                         return (
-                            <div>
-                                <h4>{ action.developerName }</h4>
-                                <h5>/{ action.uriPart }</h5>
-                                <h5>{ action.developerSummary }</h5>
+                            <div className="action clearfix">
+                                <div className="row">
+                                    <div className="col-sm-10">
+                                        <h4>{ action.developerName }</h4>
+                                        <h5>/{ action.uriPart }</h5>
+                                        <h5>{ action.developerSummary }</h5>
+                                    </div>
 
-                                <button className="btn btn-small btn-default" onClick={ this.onTest } id={ action.uriPart }>Test</button>
+                                    <div className="col-sm-2">
+                                        <button className="btn btn-primary" onClick={ this.onTest } id={ action.uriPart }>Test</button>
+                                    </div>
+                                </div>
 
-                                <h5><strong>Inputs</strong></h5>
-                                <PropertyTable properties={ action.serviceInputs } isRequiredVisible="true"></PropertyTable>
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <h5><strong>Inputs</strong></h5>
+                                        <PropertyTable properties={ action.serviceInputs } isRequiredVisible="true"></PropertyTable>
 
-                                <h5><strong>Outputs</strong></h5>
-                                <PropertyTable properties={ action.serviceOutputs } isRequiredVisible="true"></PropertyTable>
+                                        <h5><strong>Outputs</strong></h5>
+                                        <PropertyTable properties={ action.serviceOutputs } isRequiredVisible="true"></PropertyTable>
+                                    </div>
+                                </div>
                             </div>
                         );
 

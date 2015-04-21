@@ -11,7 +11,7 @@ manywho.types = React.createClass({
                 {
                     types.map(function(type) {
 
-                        return (<div>
+                        return (<div className="type">
                             <h4 id={ type.developerName.replace(/ /g, '_') }>{ type.developerName }</h4>
                             <p>{ type.developerSummary }</p>
                             <PropertyTable properties={type.properties}></PropertyTable>

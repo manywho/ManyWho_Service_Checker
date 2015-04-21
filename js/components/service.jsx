@@ -63,15 +63,30 @@ manywho.service = React.createClass({
                 <button className="btn btn-danger" type="button" onClick={ this.onDelete }>Delete</button>
             </div>
 
-            <div className="row">
-                <div className="col-sm-7">
-                    <Provides service={ this.props.service } />
-                    <ConfigurationValues service={ this.props.service }/>
-                    <Types service={ this.props.service }/>
+            <div role="tabpanel" className="service-tabs">
+
+              <ul className="nav nav-tabs" role="tablist">
+                <li role="presentation" className="active"><a href="#provides" aria-controls="home" role="tab" data-toggle="tab">Provides</a></li>
+                <li role="presentation"><a href="#configuration-values" aria-controls="profile" role="tab" data-toggle="tab">Configuration Values</a></li>
+                <li role="presentation"><a href="#types" aria-controls="messages" role="tab" data-toggle="tab">Types</a></li>
+                <li role="presentation"><a href="#actions" aria-controls="settings" role="tab" data-toggle="tab">Actions</a></li>
+              </ul>
+
+              <div className="tab-content">
+                <div role="tabpanel" className="tab-pane active" id="provides">
+                  <Provides service={ this.props.service } />
                 </div>
-                <div className="col-sm-5">
-                    <Actions service={ this.props.service }/>
+                <div role="tabpanel" className="tab-pane" id="configuration-values">
+                  <ConfigurationValues service={ this.props.service }/>
                 </div>
+                <div role="tabpanel" className="tab-pane" id="types">
+                  <Types service={ this.props.service }/>
+                </div>
+                <div role="tabpanel" className="tab-pane" id="actions">
+                  <Actions service={ this.props.service }/>
+                </div>
+              </div>
+
             </div>
 
         </div>

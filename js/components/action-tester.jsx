@@ -108,9 +108,16 @@ manywho.actionTester = React.createClass({
                 <div className="action-tester-container" onKeyUp={ this.onKeyUp }>
                     <div className="action-tester-background" onClick={ this.props.onClose }></div>
                     <div className={ classes }>
-                        <h3>{ this.props.action.uriPart }</h3>
-                        <p>{ this.props.action.developerSummary }</p>
-                        <button className="btn btn-default" onClick={ this.onTest }>Test</button>
+
+                        <div className="row">
+                            <div className="col-sm-10">
+                                <h3>{ this.props.action.uriPart }</h3>
+                                <p>{ this.props.action.developerSummary }</p>
+                            </div>
+                            <div className="col-sm-2">
+                                <button className="btn btn-primary" onClick={ this.onTest }>Test</button>
+                            </div>
+                        </div>
 
                         <div className="row">
                             <div className="col-sm-6">
@@ -142,6 +149,7 @@ manywho.actionTester = React.createClass({
                                 { (this.state.error) ? <div style={ { wordWrap: 'break-word' } }>{this.state.error}</div> : null }
                             </div>
                         </div>
+
                     </div>
                 </div>
             );

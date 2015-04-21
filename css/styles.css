@@ -10,8 +10,25 @@
     margin-bottom: 1em;
 }
 
+.service-tabs {
+    margin-top: 2em;
+}
+
 .configuration-values-table {
     margin-top: 1em;
+}
+
+.type {
+    margin-top: 2em;
+}
+
+.action {
+    margin-top: 2em;
+}
+
+.action-inputs-outputs {
+    margin-top: 2em;
+    clear: both;
 }
 
 .action-tester-container {
