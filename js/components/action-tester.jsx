@@ -1,3 +1,71 @@
+function getInput(input, service) {
+
+    var value = {
+        developerName: input.developerName,
+        typeElementDeveloperName: input.typeElementDeveloperName,
+        contentType: input.contentType,
+        contentValue: input.contentValue || null,
+        objectData: null
+    }
+
+    if (input.contentType == "ContentList" || input.contentType == "ContentObject") {
+
+        value.objectData = [getObjectData(input.typeElementDeveloperName, service, 0)];
+
+    }
+
+    return value;
+
+}
+
+function getObjectData(typeName, service, depth) {
+
+    debugger;
+
+    depth++;
+    if (depth > 2) {
+
+        return null;
+
+    }
+
+    var type = service.types.filter(function(type) {
+
+        return type.developerName == typeName;
+
+    })[0];
+
+    var objectData = {
+        externalId: null,
+        developerName: type.developerName,
+        isSelected: false,
+        properties: type.properties.map(function(prop) {
+
+            var propData = {
+                developerName: prop.developerName
+            }
+
+            if (prop.contentType == "ContentList" || prop.contentType == "ContentObject") {
+
+                propData.objectData = getObjectData(prop.typeElementDeveloperName, service, depth);
+
+            }
+            else {
+
+                propData.contentValue = '',
+                propData.objectData = null
+
+            }
+
+            return propData;
+
+        })
+    }
+
+    return objectData;
+
+}
+
 manywho.actionTester = React.createClass({
 
     getInputControl: function(input) {
@@ -6,7 +74,7 @@ manywho.actionTester = React.createClass({
             case 'contentobject':
             case 'contentlist':
 
-                return <div id={ input.developerName } className="json-editor" style={ { height: '200px' } }></div>
+                return <div id={ input.developerName } className="json-editor" style={ { height: '300px' } }></div>
 
             case 'contenttext':
             case 'contentpassword':
@@ -68,9 +136,17 @@ manywho.actionTester = React.createClass({
             jsonEditors.forEach(function(editor) {
 
                 editor.classList.add('initialized');
-                new JSONEditor(editor, { mode: 'code' });
+                var instance = new JSONEditor(editor, { mode: 'code' });
 
-            });
+                var input = this.props.action.serviceInputs.filter(function(input) {
+
+                    return input.developerName == editor.id;
+
+                })[0];
+
+                instance.set(getInput(input, this.props.service));
+
+            }, this);
 
         }
 
@@ -109,13 +185,15 @@ manywho.actionTester = React.createClass({
                     <div className="action-tester-background" onClick={ this.props.onClose }></div>
                     <div className={ classes }>
 
-                        <div className="row">
+                        <button type="button" className="close pull-right" aria-label="Close" onClick={ this.props.onClose }><span aria-hidden="true">&times;</span></button>
+
+                        <div className="row" style={ { clear: 'both' } }>
                             <div className="col-sm-10">
                                 <h3>{ this.props.action.uriPart }</h3>
                                 <p>{ this.props.action.developerSummary }</p>
                             </div>
                             <div className="col-sm-2">
-                                <button className="btn btn-primary" onClick={ this.onTest }>Test</button>
+                                <button className="btn btn-primary" onClick={ this.onTest } style={ { marginTop: '42px' } }>Test</button>
                             </div>
                         </div>
 

@@ -52,7 +52,7 @@ manywho.actions = React.createClass({
                                     </div>
 
                                     <div className="col-sm-2">
-                                        <button className="btn btn-primary" onClick={ this.onTest } id={ action.uriPart }>Test</button>
+                                        <button className="btn btn-primary" onClick={ this.onTest } id={ action.uriPart } style={ { marginTop: '46px' } }>Test</button>
                                     </div>
                                 </div>
 
