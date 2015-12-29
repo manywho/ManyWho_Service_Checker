@@ -1,0 +1,54 @@
+html, body, #root, .root {
+    width: 100%;
+    height: 100%;
+}
+
+.root {
+    display: flex;
+    flex-direction: row;
+    padding: 1em 0;
+}
+
+.services {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    width: 250px;
+    flex-basis: 250px;
+    max-width: 250px;
+    border-right: 1px solid #ddd;
+    padding: 0 1em;
+}
+
+.list-group {
+    flex-grow: 1;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.service {
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding: 0 1em;
+}
+
+.btn + .btn {
+    margin-left: 1em;
+}
+
+.form-inline > .form-group {
+    margin-right: 1em;
+}
+
+td > .btn {
+    margin-right: 0.5em;
+}
+
+.checkbox span {
+    margin-left: 0.25em;
+}
+
+.checkbox input {
+    top: 3px;
+}

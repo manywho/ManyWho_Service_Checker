@@ -1,18 +1,26 @@
-ManyWho Service Checker
-=======================
-
-This is a nw.js app to help test services created for ManyWho.
+# ManyWho Service Checker
 
 ## Install
 
-* Install Node dependencies with `npm install`
-* Install Bower dependencies with `bower install`
-* Install Gulp with `npm install gulp -g`
+Install dependencies.
 
-## Building
+```bash
+npm install
+```
 
-Run the `gulp build` task to build the nw.js application, this will be output to the `build` directory.
+## Run
 
-## Running
+Run this two commands __simultaneously__ in different console tabs.
 
-Run the relevant nw.js package for your platform from the `build` directory.
+```bash
+npm run hot-server
+npm run start-hot
+```
+
+*Note: requires a node version >= 4 and an npm version >= 2.*
+
+#### Toggle Chrome DevTools
+
+- OS X: <kbd>Cmd</kbd> <kbd>Alt</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
+- Linux: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
+- Windows: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
