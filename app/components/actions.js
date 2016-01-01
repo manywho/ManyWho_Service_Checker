@@ -12,10 +12,14 @@ class Actions extends React.Component {
         super(props);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.actions !== this.props.actions;
+    }
+
     render() {
         const actions = this.props.actions
-                        && this.props.actions.size > 0
-                        && this.props.actions.toArray().map((action) => {
+                        && this.props.actions.length > 0
+                        && this.props.actions.map((action) => {
                             return (<tr key={action.developerName}>
                                         <td><Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, action)}>View</Button> {action.developerName}</td>
                                     </tr>);

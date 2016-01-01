@@ -5,19 +5,28 @@ class Types extends React.Component {
 
     static propTypes = {
         types: React.PropTypes.any,
-        onView: React.PropTypes.func
+        onView: React.PropTypes.func,
+        onTest: React.PropTypes.func
     }
 
     constructor(props) {
         super(props);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.types !== this.props.types;
+    }
+
     render() {
         const types = this.props.types
-                        && this.props.types.size > 0
-                        && this.props.types.toArray().map((type) => {
+                        && this.props.types.length > 0
+                        && this.props.types.map((type) => {
                             return (<tr key={type.developerName}>
-                                        <td><Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, type)}>View</Button>{type.developerName}</td>
+                                        <td>
+                                            <Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, type)}>View</Button>
+                                            <Button bsStyle="primary" bsSize="small" onClick={this.props.onTest.bind(null, type)}>Load / Save</Button>
+                                        </td>
+                                        <td>{type.developerName}</td>
                                         <td>{type.developerSummary}</td>
                                     </tr>);
                         });
@@ -27,6 +36,7 @@ class Types extends React.Component {
             <table className="table table-bordered table-striped">
                 <tbody>
                     <tr>
+                        <th>Actions</th>
                         <th>Name</th>
                         <th>Summary</th>
                     </tr>

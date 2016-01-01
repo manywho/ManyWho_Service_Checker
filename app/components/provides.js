@@ -4,11 +4,15 @@ import { Input } from 'react-bootstrap';
 class Provides extends React.Component {
 
     static propTypes = {
-        service: React.PropTypes.any
+        service: React.PropTypes.object
     }
 
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return nextProps.service !== this.props.service;
     }
 
     render() {

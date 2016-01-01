@@ -8,6 +8,8 @@ Install dependencies.
 npm install
 ```
 
+On windows `npm install --msvs_version=2015` (or whatever version you have installed)
+
 ## Run
 
 Run this two commands __simultaneously__ in different console tabs.

@@ -11,10 +11,14 @@ class ConfigurationValues extends React.Component {
         super(props);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.values !== this.props.values;
+    }
+
     render() {
         const values = this.props.values
-                        && this.props.values.size > 0
-                        && this.props.values.toArray().map((value) => {
+                        && this.props.values.length > 0
+                        && this.props.values.map((value) => {
                             return (<tr key={value.developerName}>
                                         <td>{value.developerName}</td>
                                         <td>{value.contentType}</td>

@@ -4,8 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 class Type extends React.Component {
 
     static propTypes = {
-        type: React.PropTypes.any,
-        isVisible: React.PropTypes.any,
+        type: React.PropTypes.object,
         onClose: React.PropTypes.func
     }
 
@@ -13,10 +12,15 @@ class Type extends React.Component {
         super(props);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.type !== this.props.type;
+    }
+
     render() {
         const properties = this.props.type
                             && this.props.type.properties
                             && this.props.type.properties
+                                .map((property) => property)
                                 .sort((a, b) => {
                                     if(a.developerName < b.developerName) return -1;
                                     if(a.developerName > b.developerName) return 1;
@@ -31,7 +35,7 @@ class Type extends React.Component {
                                             </tr>);
                                 });
 
-        return (<Modal show={this.props.isVisible} onHide={this.props.onClose} bsSize="large">
+        return (<Modal show onHide={this.props.onClose} bsSize="large">
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.type && this.props.type.developerName}</Modal.Title>
                     </Modal.Header>

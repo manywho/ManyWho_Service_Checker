@@ -17,6 +17,10 @@ class ConfigurationValue extends React.Component {
         this.onEditorChange = this.onEditorChange.bind(this);
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.value !== this.props.value;
+    }
+
     onChange(e) {
         this.props.onChange(this.props.value.developerName, e.target.value);
     }

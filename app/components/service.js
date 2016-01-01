@@ -4,16 +4,12 @@ import Provides from './provides.js';
 import ConfigurationValues from './configuration-values.js';
 import Types from './types.js';
 import Actions from './actions.js';
-import ServiceActions from '../action/service.js';
-import ServicesActions from '../action/services.js';
-import TypeActions from '../action/type.js';
-import ActionActions from '../action/action.js';
+import State from '../state.js';
 
 class Service extends React.Component {
 
     static propTypes = {
-        onEdit: React.PropTypes.func,
-        service: React.PropTypes.any
+        service: React.PropTypes.object
     }
 
     constructor(props) {
@@ -25,41 +21,45 @@ class Service extends React.Component {
         this.onConfigurationValueChange = this.onConfigurationValueChange.bind(this);
     }
 
+    shouldComponentUpdate(nextProps) {
+		return nextProps.service !== this.props.service;
+	}
+
     onNameChange(e) {
-        const service = this.props.service;
-        service.name = e.target.value;
-        this.props.onEdit(service);
+        this.props.service.set('name', e.target.value);
     }
 
     onUriChange(e) {
-        const service = this.props.service;
-        service.uri = e.target.value;
-        this.props.onEdit(service);
+        this.props.service.set('uri', e.target.value);
     }
 
     onConfigurationValueChange(name, value) {
-        const configurationValue = this.props.service.configurationValues.get(name);
-        configurationValue.contentValue = value;
+        const index = this.props.service.configurationValues.map((item) => item.developerName).indexOf(name);
+        const configurationValue = this.props.service.configurationValues[index].set({ contentValue: value });
 
-        const service = this.props.service;
-        service.configurationValues = service.configurationValues.set(name, configurationValue);
-        this.props.onEdit(service);
+        this.props.service.configurationValues.set(index, configurationValue);
     }
 
     onRefresh() {
-        ServiceActions.metadata(this.props.service.uri);
+        State.trigger('service:refresh', this.props.service, false);
     }
 
     onRefreshWithConfigurationValues() {
-        ServiceActions.metadata(this.props.service.uri, this.props.service.configurationValues);
+        State.trigger('service:refresh', this.props.service, true);
     }
 
     onViewType(type) {
-        TypeActions.view(type);
+        const state = State.get();
+        state.set({ type });
+    }
+
+    onTestType(type) {
+
     }
 
     onViewAction(action) {
-        ActionActions.view(action);
+        const state = State.get();
+        state.set({ action });
     }
 
     render() {
@@ -74,7 +74,7 @@ class Service extends React.Component {
             <Button bsStyle="primary" onClick={this.onRefreshWithConfigurationValues}>Refresh with Configuration Values</Button>
             <Provides service={this.props.service} />
             <ConfigurationValues values={this.props.service.configurationValues} onChange={this.onConfigurationValueChange}/>
-            <Types types={this.props.service.types} onView={this.onViewType}/>
+            <Types types={this.props.service.types} onView={this.onViewType} onTest={this.onTestType}/>
             <Actions actions={this.props.service.actions} onView={this.onViewAction}/>
         </div>);
     }

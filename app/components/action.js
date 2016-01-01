@@ -4,13 +4,16 @@ import { Modal, Button } from 'react-bootstrap';
 class Action extends React.Component {
 
     static propTypes = {
-        action: React.PropTypes.any,
-        isVisible: React.PropTypes.any,
+        action: React.PropTypes.object,
         onClose: React.PropTypes.func
     }
 
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return nextProps.action !== this.props.action;
     }
 
     render() {
@@ -36,7 +39,7 @@ class Action extends React.Component {
                             </tr>);
                         });
 
-        return (<Modal show={this.props.isVisible} onHide={this.props.onClose} bsSize="large">
+        return (<Modal show onHide={this.props.onClose} bsSize="large">
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.action && this.props.action.developerName}</Modal.Title>
                     </Modal.Header>
