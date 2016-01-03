@@ -4,7 +4,8 @@ import Provides from './provides.js';
 import ConfigurationValues from './configuration-values.js';
 import Types from './types.js';
 import Type from './type.js';
-import TypeTest from './type-test.js';
+import TypeLoad from './type-load.js';
+import TypeSave from './type-save.js';
 import Actions from './actions.js';
 import Action from './action.js';
 import ActionTest from './action-test.js';
@@ -25,8 +26,7 @@ class Service extends React.Component {
         this.onRefresh = this.onRefresh.bind(this);
         this.onRefreshWithConfigurationValues = this.onRefreshWithConfigurationValues.bind(this);
         this.onConfigurationValueChange = this.onConfigurationValueChange.bind(this);
-        this.onViewType = this.onViewType.bind(this);
-        this.onTestType = this.onTestType.bind(this);
+        this.typeAction = this.typeAction.bind(this);
         this.onViewAction = this.onViewAction.bind(this);
         this.onTestAction = this.onTestAction.bind(this);
         this.closeEditor = this.closeEditor.bind(this);
@@ -46,9 +46,14 @@ class Service extends React.Component {
 
     onConfigurationValueChange(name, value) {
         const index = this.props.service.configurationValues.map((item) => item.developerName).indexOf(name);
-        const configurationValue = this.props.service.configurationValues[index].set({ contentValue: value });
+        const configurationValue = this.props.service.configurationValues[index];
 
-        this.props.service.configurationValues.set(index, configurationValue);
+        if (configurationValue.contentType === 'CONTENTLIST' || configurationValue.contentType === 'CONTENTOBJECT') {
+            configurationValue.set({ objectData: JSON.parse(value) });
+        }
+        else {
+            configurationValue.set({ contentValue: value });
+        }
     }
 
     onRefresh() {
@@ -59,12 +64,8 @@ class Service extends React.Component {
         Model.trigger('service:refresh', this.props.service, true);
     }
 
-    onViewType(type) {
-        this.props.editor.set(this.props.service.id, { kind: 'TYPE', name: type.developerName });
-    }
-
-    onTestType(type) {
-        this.props.editor.set(this.props.service.id, { kind: 'TYPE-TEST', name: type.developerName });
+    typeAction(type, kind) {
+        this.props.editor.set(this.props.service.id, { kind, name: type.developerName });
     }
 
     onViewAction(action) {
@@ -92,8 +93,12 @@ class Service extends React.Component {
                     editor = <Type type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
                     break;
 
-                case 'TYPE-TEST':
-                    editor = <TypeTest type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
+                case 'TYPE-LOAD':
+                    editor = <TypeLoad type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
+                    break;
+
+                case 'TYPE-SAVE':
+                    editor = <TypeSave type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
                     break;
 
                 case 'ACTION':
@@ -110,10 +115,10 @@ class Service extends React.Component {
             <Input type="text" label="Name" value={this.props.service.name} onChange={this.onNameChange} />
             <Input type="text" label="Uri" value={this.props.service.uri} onChange={this.onUriChange} />
             <Button bsStyle="info" onClick={this.onRefresh}>Refresh</Button>
-            <Button bsStyle="primary" onClick={this.onRefreshWithConfigurationValues}>Refresh with Configuration Values</Button>
+            <Button bsStyle="primary" onClick={this.onRefreshWithConfigurationValues} disabled={!this.props.service.configurationValues || this.props.service.configurationValues.length == 0}>Refresh with Configuration Values</Button>
             <Provides service={this.props.service} />
             <ConfigurationValues values={this.props.service.configurationValues} onChange={this.onConfigurationValueChange}/>
-            <Types types={this.props.service.types} onView={this.onViewType} onTest={this.onTestType}/>
+            <Types types={this.props.service.types} onAction={this.typeAction}/>
             <Actions actions={this.props.service.actions} onView={this.onViewAction} onTest={this.onTestAction} />
             {editor}
         </div>);

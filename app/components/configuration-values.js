@@ -22,12 +22,12 @@ class ConfigurationValues extends React.Component {
                             return (<tr key={value.developerName}>
                                         <td>{value.developerName}</td>
                                         <td>{value.contentType}</td>
-                                        <td><input type="checkbox" readOnly checked={value.isRequired} /></td>
+                                        <td><input type="checkbox" readOnly checked={value.isRequired} tabIndex="-1" /></td>
                                         <td><ConfigurationValue value={value} onChange={this.props.onChange} /></td>
                                     </tr>);
                         });
 
-        return (<div className="configurationValues">
+        return (<div className="configuration-values">
             <h3>Configuration Values <small>{values && values.length}</small></h3>
             <table className="table table-bordered table-striped">
                 <tbody>

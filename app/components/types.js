@@ -5,8 +5,7 @@ class Types extends React.Component {
 
     static propTypes = {
         types: React.PropTypes.any,
-        onView: React.PropTypes.func,
-        onTest: React.PropTypes.func
+        onAction: React.PropTypes.func
     }
 
     constructor(props) {
@@ -23,8 +22,9 @@ class Types extends React.Component {
                         && this.props.types.map((type) => {
                             return (<tr key={type.developerName}>
                                         <td>
-                                            <Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, type)}>View</Button>
-                                            <Button bsStyle="primary" bsSize="small" onClick={this.props.onTest.bind(null, type)}>Load / Save</Button>
+                                            <Button bsStyle="info" bsSize="small" onClick={this.props.onAction.bind(null, type, 'TYPE')}>View</Button>
+                                            <Button bsStyle="primary" bsSize="small" onClick={this.props.onAction.bind(null, type, 'TYPE-LOAD')}>Load</Button>
+                                            <Button bsStyle="success" bsSize="small" onClick={this.props.onAction.bind(null, type, 'TYPE-SAVE')}>Save</Button>
                                         </td>
                                         <td>{type.developerName}</td>
                                         <td>{type.developerSummary}</td>

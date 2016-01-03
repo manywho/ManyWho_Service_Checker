@@ -21,7 +21,22 @@ Model.on('services:delete', () => {
 });
 
 Model.on('service:refresh', (service, useConfigurationValues) => {
-    fetch(service.uri + '/metadata', { method: 'POST' })
+    let body = null;
+    if (useConfigurationValues && service.configurationValues) {
+        body = {
+            configurationValues: service.configurationValues
+        };
+    }
+
+    fetch(service.uri + '/metadata',
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: body && JSON.stringify(body)
+        })
         .then(CheckStatus)
         .then(Parse)
         .then((response) => {

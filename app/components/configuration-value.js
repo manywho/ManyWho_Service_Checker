@@ -47,10 +47,11 @@ class ConfigurationValue extends React.Component {
                 case 'CONTENTDATETIME':
                     return <DateTime key={this.props.value.developerName} onDateTimeChange={this.onChange} value={this.props.value.contentValue} />;
                 case 'CONTENTCONTENT':
-                   return <ContentEditor key={this.props.value.developerName} name={this.props.value.developerName} value={this.props.value.contentValue} onSave={this.onEditorChange} />
-               case 'CONTENTOBJECT':
-               case 'CONTENTLIST':
-                  return <JsonEditor key={this.props.value.developerName} name={this.props.value.developerName} value={this.props.value.contentValue} onSave={this.onEditorChange} />
+                    return <ContentEditor key={this.props.value.developerName} name={this.props.value.developerName} value={this.props.value.contentValue} onSave={this.onEditorChange} />
+                case 'CONTENTOBJECT':
+                case 'CONTENTLIST':
+                    const value = this.props.value.objectData && JSON.stringify(this.props.value.objectData);
+                    return <JsonEditor key={this.props.value.developerName} name={this.props.value.developerName} value={value} onSave={this.onEditorChange} />
             }
         }
 

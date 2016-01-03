@@ -53,6 +53,11 @@ td > .btn {
     top: 3px;
 }
 
+.configuration-values .table td:first-child, .types .table td:first-child, .actions .table td:first-child {
+    width: 1px;
+    white-space: nowrap;
+}
+
 .modal-container {
     position: relative;
 }

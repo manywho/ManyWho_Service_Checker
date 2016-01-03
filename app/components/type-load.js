@@ -1,12 +1,12 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Input, Modal, Button } from 'react-bootstrap';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 
 import 'brace/mode/json';
 import 'brace/theme/github';
 
-class TypeTest extends React.Component {
+class TypeLoad extends React.Component {
 
     static propTypes = {
         type: React.PropTypes.object,
@@ -25,11 +25,20 @@ class TypeTest extends React.Component {
     render() {
         return (<Modal show onHide={this.props.onClose} container={this.props.container} bsSize="large">
                     <Modal.Header closeButton>
-                        <Modal.Title>{this.props.type && this.props.type.developerName}</Modal.Title>
+                        <Modal.Title>{'Load By Type: ' + this.props.type.developerName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <h3>List Filter</h3>
+                        <Input type="text" label="Id" />
+                        <Input type="text" label="Search" />
+                        <Input type="number" label="Limit" />
+                        <Input type="number" label="Offset" />
+                        <Input type="text" label="Order By DirectionType" />
+                        <Input type="text" label="Order By Property DeveloperName" />
+                        <Input type="checkbox" label="Filter By Provided Objects" />
+                        <Input type="text" label="Comparison Type" />
+                        <h4>Wheres</h4>
                         <AceEditor mode="json" theme="github" name={this.props.type.developerName + '_editor'} />
-                        <Button>Save</Button>
                         <Button>Load</Button>
                     </Modal.Body>
                     <Modal.Footer>
@@ -39,4 +48,4 @@ class TypeTest extends React.Component {
     }
 }
 
-export default TypeTest;
+export default TypeLoad;

@@ -20,7 +20,8 @@ class Services extends React.Component {
 	}
 
     onClick(e) {
-        State.set({ service: e.target.id });
+        const state = State.get();
+        state.set('service', e.target.id);
     }
 
     onNew() {

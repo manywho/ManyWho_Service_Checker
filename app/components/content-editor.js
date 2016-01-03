@@ -24,7 +24,7 @@ class ContentEditor extends React.Component {
     }
 
     onChange(value) {
-        this.setState({ value: value });
+        this.setState({ value });
     }
 
     onEdit() {
