@@ -5,6 +5,7 @@ class Type extends React.Component {
 
     static propTypes = {
         type: React.PropTypes.object,
+        container: React.PropTypes.any,
         onClose: React.PropTypes.func
     }
 
@@ -35,7 +36,7 @@ class Type extends React.Component {
                                             </tr>);
                                 });
 
-        return (<Modal show onHide={this.props.onClose} bsSize="large">
+        return (<Modal show onHide={this.props.onClose} container={this.props.container} bsSize="large">
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.type && this.props.type.developerName}</Modal.Title>
                     </Modal.Header>

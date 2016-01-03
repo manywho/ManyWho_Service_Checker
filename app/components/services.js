@@ -1,21 +1,18 @@
 import React from 'react';
 import State from '../state.js';
+import Model from '../model.js';
 import { ListGroup, ListGroupItem, Button } from 'react-bootstrap';
-import { save } from '../utils/persistence.js';
+import { saveModel, saveState } from '../utils/persistence.js';
 
 class Services extends React.Component {
 
     static propTypes = {
         services: React.PropTypes.array.isRequired,
-        selected: React.PropTypes.object
+        selected: React.PropTypes.string
     }
 
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        State.on('update', () => this.forceUpdate());
     }
 
     shouldComponentUpdate(nextProps) {
@@ -23,24 +20,25 @@ class Services extends React.Component {
 	}
 
     onClick(e) {
-        State.trigger('services:select', e.target.id);
+        State.set({ service: e.target.id });
     }
 
     onNew() {
-        State.trigger('services:new');
-    }
-
-    onSave() {
-        save(State.get());
+        Model.trigger('services:new');
     }
 
     onDelete() {
-        State.trigger('services:delete');
+        Model.trigger('services:delete');
+    }
+
+    onSave() {
+        saveModel(Model.get());
+        saveState(State.get());
     }
 
     render() {
         const items = this.props.services.map((service) => {
-            return <ListGroupItem onClick={this.onClick} id={service.id} active={this.props.selected && this.props.selected.id === service.id} key={service.id}>{service.name}</ListGroupItem>;
+            return <ListGroupItem onClick={this.onClick} id={service.id} active={this.props.selected && this.props.selected === service.id} key={service.id}>{service.name}</ListGroupItem>;
         });
 
         return (<div className="services">

@@ -5,6 +5,7 @@ class Action extends React.Component {
 
     static propTypes = {
         action: React.PropTypes.object,
+        container: React.PropTypes.any,
         onClose: React.PropTypes.func
     }
 
@@ -39,7 +40,7 @@ class Action extends React.Component {
                             </tr>);
                         });
 
-        return (<Modal show onHide={this.props.onClose} bsSize="large">
+        return (<Modal show onHide={this.props.onClose} container={this.props.container} bsSize="large">
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.action && this.props.action.developerName}</Modal.Title>
                     </Modal.Header>

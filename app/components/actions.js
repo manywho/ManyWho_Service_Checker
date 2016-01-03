@@ -5,7 +5,8 @@ class Actions extends React.Component {
 
     static propTypes = {
         actions: React.PropTypes.any,
-        onView: React.PropTypes.func
+        onView: React.PropTypes.func,
+        onTest: React.PropTypes.func
     }
 
     constructor(props) {
@@ -21,7 +22,11 @@ class Actions extends React.Component {
                         && this.props.actions.length > 0
                         && this.props.actions.map((action) => {
                             return (<tr key={action.developerName}>
-                                        <td><Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, action)}>View</Button> {action.developerName}</td>
+                                        <td>
+                                            <Button bsStyle="info" bsSize="small" onClick={this.props.onView.bind(null, action)}>View</Button>
+                                            <Button bsStyle="primary" bsSize="small" onClick={this.props.onTest.bind(null, action)}>Test</Button>
+                                        </td>
+                                        <td>{action.developerName}</td>
                                     </tr>);
                         });
 
@@ -30,6 +35,7 @@ class Actions extends React.Component {
             <table className="table table-bordered table-striped">
                 <tbody>
                     <tr>
+                        <th>Actions</th>
                         <th>Name</th>
                     </tr>
                     {actions}

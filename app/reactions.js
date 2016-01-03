@@ -1,31 +1,26 @@
 import State from './state.js';
+import Model from './model.js';
 import { guid } from './utils/model.js';
 import { CheckStatus, Parse } from './utils/ajax.js';
 
-State.on('services:new', () => {
+Model.on('services:new', () => {
+    const model = Model.get();
     const state = State.get();
     const service = { id: guid(), name: 'ManyWho Runtime Service', uri: 'https://flow.manywho.com/plugins/manywho/api/run/1', configurationValues: {}, types: {}, actions: {} };
 
-    state.set({
-        services: state.services.push(service),
-        service: service
-    });
+    model.set({ services: model.services.push(service) });
+    state.set({ service: service.id });
 });
 
-State.on('services:select', (id) => {
+Model.on('services:delete', () => {
+    const model = Model.get();
     const state = State.get();
-    state.set('service', state.services.filter((service) => service.id === id)[0]);
+
+    model.set({ services: model.services.filter((service) => service.id !== state.service) });
+    state.set({ service: null });
 });
 
-State.on('services:delete', () => {
-    const state = State.get();
-    state.set({
-        service: null,
-        services: state.services.filter((service) => service.id !== state.service.id)
-    });
-});
-
-State.on('service:refresh', (service, useConfigurationValues) => {
+Model.on('service:refresh', (service, useConfigurationValues) => {
     fetch(service.uri + '/metadata', { method: 'POST' })
         .then(CheckStatus)
         .then(Parse)

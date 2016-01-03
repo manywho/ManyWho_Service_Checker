@@ -1,15 +1,21 @@
 import React from 'react';
-import { Input, Button } from 'react-bootstrap';
+import { Input, Button, Modal } from 'react-bootstrap';
 import Provides from './provides.js';
 import ConfigurationValues from './configuration-values.js';
 import Types from './types.js';
+import Type from './type.js';
+import TypeTest from './type-test.js';
 import Actions from './actions.js';
+import Action from './action.js';
+import ActionTest from './action-test.js';
 import State from '../state.js';
+import Model from '../model.js';
 
 class Service extends React.Component {
 
     static propTypes = {
-        service: React.PropTypes.object
+        service: React.PropTypes.object,
+        editor: React.PropTypes.object
     }
 
     constructor(props) {
@@ -19,10 +25,15 @@ class Service extends React.Component {
         this.onRefresh = this.onRefresh.bind(this);
         this.onRefreshWithConfigurationValues = this.onRefreshWithConfigurationValues.bind(this);
         this.onConfigurationValueChange = this.onConfigurationValueChange.bind(this);
+        this.onViewType = this.onViewType.bind(this);
+        this.onTestType = this.onTestType.bind(this);
+        this.onViewAction = this.onViewAction.bind(this);
+        this.onTestAction = this.onTestAction.bind(this);
+        this.closeEditor = this.closeEditor.bind(this);
     }
 
     shouldComponentUpdate(nextProps) {
-		return nextProps.service !== this.props.service;
+		return nextProps.service !== this.props.service || nextProps.editor !== this.props.editor;
 	}
 
     onNameChange(e) {
@@ -41,25 +52,31 @@ class Service extends React.Component {
     }
 
     onRefresh() {
-        State.trigger('service:refresh', this.props.service, false);
+        Model.trigger('service:refresh', this.props.service, false);
     }
 
     onRefreshWithConfigurationValues() {
-        State.trigger('service:refresh', this.props.service, true);
+        Model.trigger('service:refresh', this.props.service, true);
     }
 
     onViewType(type) {
-        const state = State.get();
-        state.set({ type });
+        this.props.editor.set(this.props.service.id, { kind: 'TYPE', name: type.developerName });
     }
 
     onTestType(type) {
-
+        this.props.editor.set(this.props.service.id, { kind: 'TYPE-TEST', name: type.developerName });
     }
 
     onViewAction(action) {
-        const state = State.get();
-        state.set({ action });
+        this.props.editor.set(this.props.service.id, { kind: 'ACTION', uri: action.uri });
+    }
+
+    onTestAction(action) {
+        this.props.editor.set(this.props.service.id, { kind: 'ACTION-TEST', uri: action.uri });
+    }
+
+    closeEditor() {
+        this.props.editor.set(this.props.service.id, null);
     }
 
     render() {
@@ -67,7 +84,29 @@ class Service extends React.Component {
             return <div className="service"></div>;
         }
 
-        return (<div className="service">
+        let editor = null;
+
+        if (this.props.editor && this.props.editor[this.props.service.id]) {
+            switch (this.props.editor[this.props.service.id].kind.toUpperCase()) {
+                case 'TYPE':
+                    editor = <Type type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
+                    break;
+
+                case 'TYPE-TEST':
+                    editor = <TypeTest type={this.props.service.types.filter((type) => type.developerName === this.props.editor[this.props.service.id].name)[0]} onClose={this.closeEditor} container={this} />
+                    break;
+
+                case 'ACTION':
+                    editor = <Action action={this.props.service.actions.filter((action) => action.uri === this.props.editor[this.props.service.id].uri)[0]} onClose={this.closeEditor} container={this} />
+                    break;
+
+                case 'ACTION-TEST':
+                    editor = <ActionTest action={this.props.service.actions.filter((action) => action.uri === this.props.editor[this.props.service.id].uri)[0]} onClose={this.closeEditor} container={this} />
+                    break;
+            }
+        }
+
+        return (<div className="service modal-container">
             <Input type="text" label="Name" value={this.props.service.name} onChange={this.onNameChange} />
             <Input type="text" label="Uri" value={this.props.service.uri} onChange={this.onUriChange} />
             <Button bsStyle="info" onClick={this.onRefresh}>Refresh</Button>
@@ -75,7 +114,8 @@ class Service extends React.Component {
             <Provides service={this.props.service} />
             <ConfigurationValues values={this.props.service.configurationValues} onChange={this.onConfigurationValueChange}/>
             <Types types={this.props.service.types} onView={this.onViewType} onTest={this.onTestType}/>
-            <Actions actions={this.props.service.actions} onView={this.onViewAction}/>
+            <Actions actions={this.props.service.actions} onView={this.onViewAction} onTest={this.onTestAction} />
+            {editor}
         </div>);
     }
 }

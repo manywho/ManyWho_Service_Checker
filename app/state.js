@@ -1,11 +1,9 @@
 import Freezer from 'freezer-js';
-import { load } from './utils/persistence.js';
+import { loadState } from './utils/persistence.js';
 
-const state = load() || {
-    services: [],
+const state = loadState() || {
     service: null,
-    action: null,
-    type: null
+    editor: {}
 };
 
 export default new Freezer(state);
