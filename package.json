@@ -99,16 +99,12 @@
     "webpack": "^1.12.1",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-hot-middleware": "^2.4.1",
-    "webpack-target-electron-renderer": "^0.3.0"
+    "webpack-target-electron-renderer": "^0.3.0",
+    "bootstrap": "^3.3.6"
   },
   "dependencies": {
-    "bootstrap": "^3.3.6",
-    "electron-debug": "^0.5.1",
-    "font-awesome": "^4.4.0",
-    "history": "^1.17.0",
     "react": "^0.14.2",
-    "react-dom": "^0.14.2",
-    "react-router": "^1.0.3"
+    "react-dom": "^0.14.2"
   },
   "devEngines": {
     "node": "4.x || 5.x",
