@@ -39,9 +39,9 @@ class TypeLoad extends React.Component {
                         <Input type="text" label="Comparison Type" />
                         <h4>Wheres</h4>
                         <AceEditor mode="json" theme="github" name={this.props.type.developerName + '_editor'} />
-                        <Button>Load</Button>
                     </Modal.Body>
                     <Modal.Footer>
+                        <Button bsStyle="primary">Load</Button>
                         <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>);

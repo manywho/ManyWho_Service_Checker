@@ -73,7 +73,7 @@ class Service extends React.Component {
     }
 
     onTestAction(action) {
-        this.props.editor.set(this.props.service.id, { kind: 'ACTION-TEST', uri: action.uri });
+        State.trigger('action:test', this.props.service, action);
     }
 
     closeEditor() {
@@ -106,7 +106,7 @@ class Service extends React.Component {
                     break;
 
                 case 'ACTION-TEST':
-                    editor = <ActionTest action={this.props.service.actions.filter((action) => action.uri === this.props.editor[this.props.service.id].uri)[0]} onClose={this.closeEditor} container={this} />
+                    editor = <ActionTest action={this.props.service.actions.filter((action) => action.uri === this.props.editor[this.props.service.id].uri)[0]} request={this.props.editor[this.props.service.id].request} onClose={this.closeEditor} container={this} />
                     break;
             }
         }

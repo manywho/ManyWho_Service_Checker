@@ -73,7 +73,7 @@ class Action extends React.Component {
                         </table>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.props.onClose}>Close</Button>
+                        <Button onClick={this.props.onClose} bsStyle="danger">Close</Button>
                     </Modal.Footer>
                 </Modal>);
     }

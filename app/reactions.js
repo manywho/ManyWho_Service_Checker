@@ -53,3 +53,12 @@ Model.on('service:refresh', (service, useConfigurationValues) => {
             });
         });
 });
+
+State.on('action:test', (service, action) => {
+    const state = State.get();
+    const request = {
+        configurationValues: [],
+        objectData: []
+    }
+    state.editor.set(service.id, { kind: 'ACTION-TEST', uri: action.uri, request: JSON.stringify(request, null, 4) });
+})

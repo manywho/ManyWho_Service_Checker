@@ -25,13 +25,13 @@ class ActionTest extends React.Component {
     render() {
         return (<Modal show onHide={this.props.onClose} container={this.props.container} bsSize="large">
                     <Modal.Header closeButton>
-                        <Modal.Title>{this.props.action.developerName}</Modal.Title>
+                        <Modal.Title>{'Action: ' + this.props.action.developerName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <AceEditor mode="json" theme="github" name={this.props.action.developerName + '_editor'} />
-                        <Button>Execute</Button>
+                        <AceEditor mode="json" theme="github" name={this.props.action.developerName + '_editor'} value={this.props.request} />
                     </Modal.Body>
                     <Modal.Footer>
+                        <Button bsStyle="primary">Execute</Button>
                         <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>);

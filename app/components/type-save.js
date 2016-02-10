@@ -34,9 +34,9 @@ class TypeSave extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <AceEditor mode="json" theme="github" value={this.state.json} name={this.props.type.developerName + '_editor'} />
-                        <Button>Save</Button>
                     </Modal.Body>
                     <Modal.Footer>
+                        <Button bsStyle="primary">Save</Button>
                         <Button bsStyle="danger" onClick={this.props.onClose}>Close</Button>
                     </Modal.Footer>
                 </Modal>);
